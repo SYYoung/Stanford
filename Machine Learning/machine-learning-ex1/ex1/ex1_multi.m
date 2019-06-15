@@ -53,6 +53,7 @@ fprintf('Normalizing Features ...\n');
 
 % Add intercept term to X
 X = [ones(m, 1) X];
+fprintf("in ex1_mult, after adding intercept, size of X = %d, %d", size(X,1), size(X,2));
 
 
 %% ================ Part 2: Gradient Descent ================

@@ -49,11 +49,12 @@ pause;
 % Scale features and set them to zero mean
 fprintf('Normalizing Features ...\n');
 
+% fprintf('before normalized:, first 2 elements of X= %f, %f', X(1,1),X(1,2));
 [X mu sigma] = featureNormalize(X);
+% fprintf('First 2 normalized = %f, %f,', X(1,1), X(1,2));
 
 % Add intercept term to X
 X = [ones(m, 1) X];
-fprintf("in ex1_mult, after adding intercept, size of X = %d, %d", size(X,1), size(X,2));
 
 
 %% ================ Part 2: Gradient Descent ================

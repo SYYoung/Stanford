@@ -16,7 +16,6 @@ for iter = 1:num_iters
     % Hint: While debugging, it can be useful to print out the values
     %       of the cost function (computeCostMulti) and gradient here.
     %
-    fprintf("size of X = %d, %d, size of theta = %d, %d", size(X,1), size(X,2), size(theta,1), size(theta, 2));
     err = X * theta - y;
     theta = theta - alpha/m * (err' * X)';
 

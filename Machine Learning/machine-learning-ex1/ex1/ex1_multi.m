@@ -83,9 +83,26 @@ X = [ones(m, 1) X];
 
 fprintf('Running gradient descent ...\n');
 
+
+% try a range of alpha values
+alpha_list = logspace(-2,0,10);
+col_list = ['b' 'r' 'k' 'g' 'm' 'c' 'w' 'b' 'r' 'k' 'g'];
+num_iters = 200;
+theta = zeros(3, 1);
+[theta, J_history] = gradientDescentMulti(X, y, theta, alpha_list(1,1), num_iters);
+figure;
+plot(1:numel(J_history), J_history, col_list(1,1), 'LineWidth', 2);
+hold on;
+for i=2 : length(alpha_list)
+    theta = zeros(3,1);
+    [theta, J_history] = gradientDescentMulti(X, y, theta, alpha_list(1, i), num_iters);
+    plot(1:numel(J_history), J_history, col_list(1,i), 'LineWidth', 2);
+end
+
 % Choose some alpha value
-alpha = 0.01;
-num_iters = 400;
+%alpha = 0.01;
+alpha = 1;
+num_iters = 50;
 
 % Init Theta and Run Gradient Descent 
 theta = zeros(3, 1);

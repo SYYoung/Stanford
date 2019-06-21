@@ -104,33 +104,37 @@ pause;
 %
 
 % Initialize fitting parameters
-initial_theta = zeros(size(X, 2), 1);
+lambda_list = [0;1;10;100];
+
+for i=1:length(lambda_list)
+    initial_theta = zeros(size(X, 2), 1);
 
 % Set regularization parameter lambda to 1 (you should vary this)
-lambda = 1;
+    lambda = lambda_list(i);
 
 % Set Options
-options = optimset('GradObj', 'on', 'MaxIter', 400);
+    options = optimset('GradObj', 'on', 'MaxIter', 400);
 
 % Optimize
-[theta, J, exit_flag] = ...
-	fminunc(@(t)(costFunctionReg(t, X, y, lambda)), initial_theta, options);
+    [theta, J, exit_flag] = ...
+        fminunc(@(t)(costFunctionReg(t, X, y, lambda)), initial_theta, options);
 
 % Plot Boundary
-plotDecisionBoundary(theta, X, y);
-hold on;
-title(sprintf('lambda = %g', lambda))
+    plotDecisionBoundary(theta, X, y);
+    hold on;
+    title(sprintf('lambda = %g', lambda))
 
 % Labels and Legend
-xlabel('Microchip Test 1')
-ylabel('Microchip Test 2')
+    xlabel('Microchip Test 1')
+    ylabel('Microchip Test 2')
 
-legend('y = 1', 'y = 0', 'Decision boundary')
-hold off;
+    legend('y = 1', 'y = 0', 'Decision boundary')
+    hold off;
 
 % Compute accuracy on our training set
-p = predict(theta, X);
+    p = predict(theta, X);
 
-fprintf('Train Accuracy: %f\n', mean(double(p == y)) * 100);
-fprintf('Expected accuracy (with lambda = 1): 83.1 (approx)\n');
+    fprintf('Train Accuracy: %f\n', mean(double(p == y)) * 100);
+    fprintf('Expected accuracy (with lambda = 1): 83.1 (approx)\n');
+end
 

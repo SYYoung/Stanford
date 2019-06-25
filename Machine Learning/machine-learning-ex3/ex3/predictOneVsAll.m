@@ -37,6 +37,11 @@ X = [ones(m, 1) X];
 
 
 % =========================================================================
-
+pred_matrix = zeros(num_labels, m);
+pred_matrix = sigmoid(all_theta * X');
+fprintf("dimension of pred_matrix = %d, %d", size(pred_matrix,1), size(pred_matrix,2));
+[val, ival] = max(pred_matrix, [], 1);
+p = ival';
+fprintf("first 5 items are: %f, %f, %f, %f, %f", p(1:5,1));
 
 end

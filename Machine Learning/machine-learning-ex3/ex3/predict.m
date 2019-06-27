@@ -28,24 +28,26 @@ n = size(X, 2);
 
 % Add ones to the X data matrix
 a_1 = [ones(m, 1) X]';
-fprintf("dim of a_1 = %d, %d", size(a_1,1), size(a_1,2));
+fprintf("dim of a_1 = %d, %d\n", size(a_1,1), size(a_1,2));
 
 z_2 = Theta1 * a_1;
-fprintf("dim of z_2 = %d, %d", size(z_2,1), size(z_2,2));
+fprintf("dim of z_2 = %d, %d\n", size(z_2,1), size(z_2,2));
 a_2 = sigmoid(z_2);
-fprintf("dim of a_2 = %d, %d", size(a_2,1), size(a_2,2));
-a_2 = [ones(size(a_2,2)); a_2];
-fprintf("dim of new a_2 = %d, %d", size(a_2,1), size(a_2,2));
+fprintf("dim of a_2 = %d, %d\n", size(a_2,1), size(a_2,2));
+extra_row = ones(1,size(a_2,2));
+fprintf("dim of extra_row = %d, %d\n", size(extra_row,1), size(extra_row,2));
+a_2 = [extra_row; a_2];
+fprintf("dim of new a_2 = %d, %d\n", size(a_2,1), size(a_2,2));
 
 z_3 = Theta2 * a_2;
-fprintf("dim of z_3 = %d, %d", size(z_3,1), size(z_3,2));
+fprintf("dim of z_3 = %d, %d\n", size(z_3,1), size(z_3,2));
 a_3 = sigmoid(z_3);
-fprintf("dim of a_3 = %d, %d", size(a_3,1), size(a_3,2));
+fprintf("dim of a_3 = %d, %d\n", size(a_3,1), size(a_3,2));
 
-p1 = max(a_3, [], 1);
-p = p1';
-fprintf("dim of p = %d, %d", size(p,1), size(p,2));
-fprint("first 5 of p = %d, %d, %d, %d, %d", p(1:5,1));
+[val,ival] = max(a_3, [], 1);
+p = ival';
+fprintf("dim of p = %d, %d\n", size(p,1), size(p,2));
+fprintf("first 1 of p = %d\n", p(1,1));
 % =========================================================================
 
 

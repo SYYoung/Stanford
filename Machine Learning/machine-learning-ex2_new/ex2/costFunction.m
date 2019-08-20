@@ -25,7 +25,7 @@ h = sigmoid(z);
 t1 = y .* log(h);
 t2 = (1-y) .* log(1-h);
 
-J = -1 * (t1 + t2)/m;
+J = -1 * sum(t1 + t2)/m;
 
 % now gradient
 err = h - y;

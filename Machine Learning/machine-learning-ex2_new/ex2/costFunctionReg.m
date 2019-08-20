@@ -17,9 +17,13 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
+[cost_noreg, grad_noreg] = costFunction(theta, X, y);
+%J = cost_noreg + (sum(theta .^ 2) - theta(1)^2) * lambda/(2*m);
+J = cost_noreg + sum(theta(2:end) .^ 2) * lambda/(2*m);
 
-
-
+grad_0 = grad_noreg(1);
+grad = grad_noreg + theta * lambda/m;
+grad(1) = grad_0;
 
 
 % =============================================================

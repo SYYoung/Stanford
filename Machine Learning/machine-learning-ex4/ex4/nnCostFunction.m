@@ -1,4 +1,4 @@
-function [J grad] = nnCostFunction(nn_params, ...
+function [J, grad] = nnCostFunction(nn_params, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
                                    num_labels, ...
@@ -39,6 +39,19 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 %
+
+% pad ones on X0
+a1 = [ones(m,1) X];
+z2 = Theta1 * a1';
+a2 = sigmoid(z2);
+
+% from stage 2 to stage 3
+a2 = [ones(1,m); a2];
+z3 = Theta2 * a2;
+a3 = sigmoid(z3);
+
+[val, ind] = max(a3, [], 1);
+p = ind';
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and

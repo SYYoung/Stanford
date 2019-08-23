@@ -50,8 +50,15 @@ a2 = [ones(1,m); a2];
 z3 = Theta2 * a2;
 a3 = sigmoid(z3);
 
-[val, ind] = max(a3, [], 1);
-p = ind';
+% convert y to y_mat
+y_mat = bsxfun(@eq, y, 1:num_labels);
+y_mat = y_mat';
+
+% now calculate cost
+t1 = y_mat .* log(a3);
+t2 = (1-y_mat) .* log(1-a3);
+J = sum(sum(t1+t2)) * -1/m;
+
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and

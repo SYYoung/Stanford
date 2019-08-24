@@ -41,8 +41,10 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 % pad ones on X0
-a1 = [ones(m,1) X];
-z2 = Theta1 * a1';
+%a1 = [ones(m,1) X];
+%z2 = Theta1 * a1';
+a1 = [ones(1,m); X'];
+z2 = Theta1 * a1;
 a2 = sigmoid(z2);
 
 % from stage 2 to stage 3
@@ -78,6 +80,28 @@ J = J_unreg + (reg1+reg2)*lambda/(2*m);
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
+
+big_delta_1 = zeros(size(Theta1));
+big_delta_2 = zeros(size(Theta2));
+
+for t = 1:m
+    % find small_delta_3
+    small_delta_3 = a3(:,t) - y_mat(:,t); 
+    %fprintf('dim of small_delta_3 = %d, %d', size(small_delta_3,1),size(small_delta_3,2));
+    % for layer=2
+    term1 = Theta2(:,2:end)' * small_delta_3;
+    %fprintf('dim of term1: %d, %d', size(term1,1),size(term1,2));
+    term2 = sigmoidGradient(z2(:,t));
+    %fprintf('dim of term2: %d, %d', size(term2,1),size(term2,2));
+    small_delta_2 = term1 .* term2;
+    % add up for big_delta_1 and big_delta_2
+    big_delta_1 = big_delta_1 + small_delta_2 * a1(:,t)';
+    big_delta_2 = big_delta_2 + small_delta_3 * a2(:,t)';
+end
+
+Theta1_grad = big_delta_1/m;
+Theta2_grad = big_delta_2/m;
+
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %

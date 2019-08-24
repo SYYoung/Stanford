@@ -54,10 +54,15 @@ a3 = sigmoid(z3);
 y_mat = bsxfun(@eq, y, 1:num_labels);
 y_mat = y_mat';
 
-% now calculate cost
+% now calculate unregulated cost
 t1 = y_mat .* log(a3);
 t2 = (1-y_mat) .* log(1-a3);
-J = sum(sum(t1+t2)) * -1/m;
+J_unreg = sum(sum(t1+t2)) * -1/m;
+
+% now calculate regulated cost
+reg1 = sum(sum(Theta1(:,2:end) .^2));
+reg2 = sum(sum(Theta2(:,2:end) .^2));
+J = J_unreg + (reg1+reg2)*lambda/(2*m);
 
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of

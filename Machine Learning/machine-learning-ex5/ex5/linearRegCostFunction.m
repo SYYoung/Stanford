@@ -26,6 +26,11 @@ J_unreg = sum(err .^ 2)/(2*m);
 extra_term = sum(theta(2:end) .^ 2) * lambda/(2*m);
 J = J_unreg + extra_term;
 
+grad_unreg = (err' * X)'/m;
+temp = grad_unreg(1);
+grad = grad_unreg + theta * lambda/m;
+grad(1) = temp;
+
 % =========================================================================
 
 grad = grad(:);

@@ -18,17 +18,13 @@ grad = zeros(size(theta));
 %
 %               You should set J to the cost and grad to the gradient.
 %
+n = length(theta);
 
-
-
-
-
-
-
-
-
-
-
+h = X * theta;
+err = h - y;
+J_unreg = sum(err .^ 2)/(2*m);
+extra_term = sum(theta(2:end) .^ 2) * lambda/(2*m);
+J = J_unreg + extra_term;
 
 % =========================================================================
 

@@ -164,6 +164,10 @@ pause;
 %  lambda to see how the fit and learning curve change.
 %
 
+%lambda = 0;
+% adjusting the regularization parameter(sec 3.2)
+%lambda = 1;
+%lambda = 100;
 lambda = 0;
 [theta] = trainLinearReg(X_poly, y, lambda);
 
@@ -216,5 +220,15 @@ for i = 1:length(lambda_vec)
             lambda_vec(i), error_train(i), error_val(i));
 end
 
+% choose the best lambda
+[err, ind] = min(error_val);
+best_lambda = lambda_vec(ind);
+fprintf('The lambda which has the lowest cross validation error = %d\n', best_lambda);
+
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+% use this best lambda to calcuate the test error
+best_theta = trainLinearReg(X_poly, y, best_lambda);
+[error_test, grad1] = linearRegCostFunction(X_poly_test, ytest, best_theta, 0);
+fprintf('With the best lambda = %d, the test error = %f\n', best_lambda, error_test);

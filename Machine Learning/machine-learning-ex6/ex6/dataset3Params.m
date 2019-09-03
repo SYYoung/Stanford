@@ -23,11 +23,29 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+%model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+% the range from 0.01 to 100, logspace
 
+C_list = logspace(-2, 2, 9)';
+sigma_list = logspace(-2, 2, 9)';
+error_cv = zeros(size(C_list,1)*size(sigma_list,1), 3);
 
+for i = 1:size(C_list,1)
+    start = (i-1)* size(sigma_list,1);
+    for j = 1:size(sigma_list,1)
+        model= svmTrain(X, y, C_list(i), @(x1, x2) gaussianKernel(x1, x2, ...
+            sigma_list(j)));
+        predictions = svmPredict(model, Xval);
+        err = mean(double(predictions ~= yval));
+        error_cv(start+j,:) = [C_list(i), sigma_list(j), err];
+    end
+end
 
-
-
+% choose the min error rate
+[best_err, best_row] = min(error_cv(:,3));
+C = error_cv(best_row,1);
+sigma = error_cv(best_row,2);
+%error_cv
 
 % =========================================================================
 

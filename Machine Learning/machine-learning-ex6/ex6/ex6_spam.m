@@ -26,7 +26,7 @@ clear ; close all; clc
 %  complete the code in processEmail.m to produce a word indices vector
 %  for a given email.
 
-fprintf('\nPreprocessing sample email (emailSample1.txt)\n');
+fprintf('\nPart 1: Preprocessing sample email (emailSample1.txt)\n');
 
 % Extract Features
 file_contents = readFile('emailSample1.txt');
@@ -37,7 +37,7 @@ fprintf('Word Indices: \n');
 fprintf(' %d', word_indices);
 fprintf('\n\n');
 
-fprintf('Program paused. Press enter to continue.\n');
+fprintf('Part 1: Program paused. Press enter to continue.\n');
 pause;
 
 %% ==================== Part 2: Feature Extraction ====================
@@ -45,7 +45,7 @@ pause;
 %  You should complete the code in emailFeatures.m to produce a feature
 %  vector for a given email.
 
-fprintf('\nExtracting features from sample email (emailSample1.txt)\n');
+fprintf('\nPart 2: Extracting features from sample email (emailSample1.txt)\n');
 
 % Extract Features
 file_contents = readFile('emailSample1.txt');
@@ -56,7 +56,7 @@ features      = emailFeatures(word_indices);
 fprintf('Length of feature vector: %d\n', length(features));
 fprintf('Number of non-zero entries: %d\n', sum(features > 0));
 
-fprintf('Program paused. Press enter to continue.\n');
+fprintf('Part 2: Program paused. Press enter to continue.\n');
 pause;
 
 %% =========== Part 3: Train Linear SVM for Spam Classification ========
@@ -135,4 +135,15 @@ p = svmPredict(model, x);
 
 fprintf('\nProcessed %s\n\nSpam Classification: %d\n', filename, p);
 fprintf('(1 indicates spam, 0 indicates not spam)\n\n');
+
+fname_list = {'emailSample1.txt', 'emailSample2.txt', 'spamSample1.txt', 'spamSample2.txt'};
+for i = 1:4
+    file_contents = readFile(fname_list{1,i});
+    word_indices = processEmail(file_contents);
+    x = emailFeatures(word_indices);
+    p = svmPredict(model, x);
+    
+    fprintf('\nProcessed %s\n\nSpam Classification: %d\n', fname_list{1,i}, p);
+    fprintf('(1 indicates spam, 0 indicates not spam)\n\n');
+end
 

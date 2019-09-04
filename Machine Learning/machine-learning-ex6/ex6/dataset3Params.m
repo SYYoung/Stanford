@@ -25,9 +25,9 @@ sigma = 0.3;
 
 %model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
 % the range from 0.01 to 100, logspace
-
-C_list = logspace(-2, 2, 9)';
-sigma_list = logspace(-2, 2, 9)';
+num_division = 8;
+C_list = logspace(-2, 2, num_division)';
+sigma_list = logspace(-2, 2, num_division)';
 error_cv = zeros(size(C_list,1)*size(sigma_list,1), 3);
 
 for i = 1:size(C_list,1)

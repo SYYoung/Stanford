@@ -20,12 +20,15 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
+% init a distance matrix
+m = size(X,1);
+dist = zeros(m,K);
+for i =1:K
+    d = bsxfun(@minus, X, centroids(i,:));
+    dist(:,i) = sum(d.^2, 2);
+end
 
-
-
-
-
-
+[val, idx] = min(dist, [], 2);
 
 % =============================================================
 

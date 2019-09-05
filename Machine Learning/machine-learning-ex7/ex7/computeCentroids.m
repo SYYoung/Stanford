@@ -26,12 +26,12 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+for i = 1:K
+    sel = find(idx==i); % it will list which x belongs to group i
+    if (size(sel,1) ~= 0)
+        centroids(i,:) = mean(X(sel,:),1);
+    end
+end
 
 % =============================================================
 

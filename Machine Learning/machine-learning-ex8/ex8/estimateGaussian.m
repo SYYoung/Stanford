@@ -21,14 +21,9 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
-
-
-
-
-
-
-
-
+mu = (mean(X, 1))';
+tmp1 = bsxfun(@minus, X, mu');
+sigma2 = mean((tmp1 .^ 2), 1)';
 
 % =============================================================
 

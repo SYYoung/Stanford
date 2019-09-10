@@ -42,10 +42,11 @@ Theta_grad = zeros(size(Theta));
 
 pred = X * Theta';
 err = (pred .* R) - (Y .* R);
-J = sum(sum(err .^ 2))/2;
+J_noreg = sum(sum(err .^ 2))/2;
+J  = J_noreg + sum(sum(Theta .^ 2))*lambda/2 + sum(sum((X .^ 2)))*lambda/2;
 
-X_grad = err * Theta;
-Theta_grad = err' * X;
+X_grad = err * Theta + lambda * X;
+Theta_grad = err' * X +lambda * Theta;
 % =============================================================
 
 grad = [X_grad(:); Theta_grad(:)];

@@ -41,9 +41,11 @@ Theta_grad = zeros(size(Theta));
 %
 
 pred = X * Theta';
-temp1 = (pred .* R) - (Y .* R);
-J = sum(sum(temp1 .^ 2))/2;
+err = (pred .* R) - (Y .* R);
+J = sum(sum(err .^ 2))/2;
 
+X_grad = err * Theta;
+Theta_grad = err' * X;
 % =============================================================
 
 grad = [X_grad(:); Theta_grad(:)];
